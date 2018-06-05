@@ -12,7 +12,10 @@ Vue.config.productionTip = false
 window.$ = window.jQuery = require('jquery')
 window.Popper = require('popper.js')
 require('bootstrap')
-require('./libraries/gsap')
+require('./libraries/scroll')
+
+//import plugins
+require('./plugins/tools')
 
 /* eslint-disable no-new */
 new Vue({

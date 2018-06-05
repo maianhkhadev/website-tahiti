@@ -1,5 +1,12 @@
 <template>
-  <section>
+  <section ref="section">
+    <video autoplay muted loop>
+      <source src="~@/assets/videos/section-08.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+
+    <div class="overlay"></div>
+
     <div class="container">
       <div class="row">
         <div class="col-xl-5 mx-auto">
@@ -22,6 +29,12 @@
       return {
 
       }
+    },
+    mounted () {
+      let self = this
+
+      self.$refs.section.onEnter = function () { console.log('section-08 enter') }
+      self.$refs.section.onLeave = function () { console.log('section-08 leave') }
     }
   }
 </script>
@@ -34,6 +47,23 @@
     position: relative;
     background-color: #4e6548;
     height: 100vh;
+
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+
+    .overlay {
+      position: absolute;
+      background-color: rgba(#000000, 0.25);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
 
     .section-content {
       text-align: center;

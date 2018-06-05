@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section ref="section">
     ffsdfsd
   </section>
 </template>
@@ -10,6 +10,12 @@
       return {
 
       }
+    },
+    mounted () {
+      let self = this
+
+      self.$refs.section.onEnter = function () { console.log('section-07 enter') }
+      self.$refs.section.onLeave = function () { console.log('section-07 leave') }
     }
   }
 </script>

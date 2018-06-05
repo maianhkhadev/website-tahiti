@@ -1,11 +1,13 @@
 <template>
-  <section>
+  <section ref="section">
+    <img class="deco-01" src="~@/assets/images/home/section-03/deco-01.png" alt=""/>
+
     <div class="container">
       <div class="row">
         <div class="col-xl-6 ml-auto">
           <div class="section-content">
             <div class="subtitle">notre marque</div>
-            <div class="title">Nous déployons nos ailes depuis 1996</div>
+            <div class="title">Nous déployons nos ailes depuis <span ref="text" class="slice-text">1996</span></div>
             <div class="content">Air Tahiti Nui a été créée en 1996 pour faire découvrir nos îles au monde. Le premier vol depuis Tahiti a été opéré en novembre 1998. Depuis, chaque voyage débute à bord d’un de nos Airbus A340-300, reliant Tahiti à Paris, Los Angeles, Auckland et Tokyo. L’envol dans le futur se poursuivra à bord des Tahitian Dreamliner (Boeing B787-9).</div>
           </div>
         </div>
@@ -18,14 +20,49 @@
 </template>
 
 <script>
+  import { TimelineLite } from 'gsap/all'
+
   export default {
     data () {
       return {
 
       }
+    },
+    mounted () {
+      let self = this
+      let tl = new TimelineLite()
+
+      window.sliceText(self.$refs.text)
+
+      self.$refs.section.onEnter = function () {
+        tl.restart()
+        tl.play()
+      }
+      self.$refs.section.onLeave = function () {
+        tl.stop()
+      }
+
+      let spans = document.querySelectorAll('.section-03 .slice-text span')
+      spans.forEach(function (span) {
+        tl.from(span, 0.5, { y: 100, opacity: 0 })
+      })
     }
   }
 </script>
+
+<style lang="scss">
+  .section-03 {
+
+    .slice-text {
+      overflow: hidden;
+
+      .letter {
+        display: inline-block;
+        color: #da291c;
+      }
+    }
+  }
+</style>
 
 <style lang="scss" scoped>
   section {
@@ -35,6 +72,7 @@
     position: relative;
     background-color: #003865;
     height: 100vh;
+    animation: colors 10s infinite;
 
     .section-content {
       text-align: center;
@@ -84,5 +122,20 @@
         }
       }
     }
+
+    .deco-01 {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+  }
+
+  @keyframes colors {
+    0%   { background: #003865; }
+    25%  { background: #a09074; }
+    50%  { background: #c63663; }
+    75%  { background: #2d2926; }
+    100% { background: #003865; }
   }
 </style>

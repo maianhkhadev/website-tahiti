@@ -1,20 +1,20 @@
 <template>
-    <div>
-      <section-01></section-01>
+    <div class="sections">
+      <section-01 id="section-01" class="section-01"></section-01>
 
-      <section-02></section-02>
+      <section-02 id="section-02" class="section-02"></section-02>
 
-      <section-03></section-03>
+      <section-03 id="section-03" class="section-03"></section-03>
 
-      <section-04></section-04>
+      <section-04 id="section-04" class="section-04"></section-04>
 
-      <section-05></section-05>
+      <section-05 id="section-05" class="section-05"></section-05>
 
-      <section-06></section-06>
+      <section-06 id="section-06" class="section-06"></section-06>
 
-      <section-07></section-07>
+      <section-07 id="section-07" class="section-07"></section-07>
 
-      <section-08></section-08>
+      <section-08 id="section-08" class="section-08"></section-08>
     </div>
 </template>
 
@@ -45,10 +45,26 @@
       'section-08': Section08
     },
     mounted () {
-      
+
     }
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .sections {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+
+    section {
+
+      @media screen and (min-width: 1200px) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
 </style>
