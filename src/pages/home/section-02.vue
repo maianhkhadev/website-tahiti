@@ -1,15 +1,12 @@
 <template>
   <section ref="section">
-    <video autoplay muted loop>
-      <source src="~@/assets/videos/section-02.mp4" type="video/mp4">
-      Your browser does not support HTML5 video.
-    </video>
-
-    <div class="overlay"></div>
+    <img class="deco-02" src="~@/assets/images/home/section-02/deco-02.png" alt=""/>
+    <img class="deco-01" src="~@/assets/images/home/section-02/deco-01.png" alt=""/>
+    <img class="deco-03" src="~@/assets/images/home/section-02/deco-03.png" alt=""/>
 
     <div class="container">
       <div class="row">
-        <div class="col-xl-6 mx-auto">
+        <div class="col-xl-6 mr-auto">
           <div class="section-content">
             <div class="subtitle">notre identité visuelle</div>
             <div class="title">Nous sommes la force et l'esprit de <span ref="text" class="slice-text">nos îles</span></div>
@@ -32,22 +29,22 @@
     },
     mounted () {
       let self = this
-      let tl = new TimelineLite()
 
       window.sliceText(self.$refs.text)
 
-      self.$refs.section.onEnter = function () {
-        tl.restart()
-        tl.play()
-      }
-      self.$refs.section.onLeave = function () {
-        tl.stop()
-      }
-
+      let timeline = new TimelineLite()
       let spans = document.querySelectorAll('.section-02 .slice-text span')
       spans.forEach(function (span) {
-        tl.from(span, 0.5, { y: 100, opacity: 0 })
+        timeline.from(span, 0.5, { y: 100, opacity: 0 })
       })
+
+      self.$refs.section.onEnter = function () {
+        timeline.restart()
+        timeline.play()
+      }
+      self.$refs.section.onLeave = function () {
+        timeline.stop()
+      }
     }
   }
 </script>
@@ -68,27 +65,13 @@
 
 <style lang="scss" scoped>
   section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: #a09074;
-    height: 100vh;
 
-    video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 100%;
-    }
-
-    .overlay {
-      position: absolute;
-      background-color: rgba(#000000, 0.25);
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+    @media screen and (min-width: 1200px) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
 
     .section-content {
@@ -117,6 +100,24 @@
         padding-left: 6.25rem;
         padding-right: 6.25rem;
       }
+    }
+
+    .deco-01 {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+    .deco-02 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+    .deco-03 {
+      position: absolute;
+      top: 25%;
+      right: 40%;
+      transform: translateY(-50%);
     }
   }
 </style>

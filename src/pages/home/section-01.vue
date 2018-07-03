@@ -1,21 +1,23 @@
 <template>
   <section ref="section">
-    <svg id="demo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+    <a class="logo" href="#">
+      <img src="~@/assets/images/logo.png" alt=""/>
+    </a>
+    <svg viewBox="0 0 1920 1280">
       <defs>
         <radialGradient id="maskGradient">
           <stop offset="50%" stop-color="#fff"/>
           <stop offset="100%" stop-color="#000"/>
         </radialGradient>
         <mask id="theMask">
-          <circle id="masker" r="150" fill="url(#maskGradient)" cx="800" cy="450" />
+          <circle ref="circle" r="0" fill="url(#maskGradient)" cx="1500" cy="500" />
+          <image xlink:href="~@/assets/images/home/section-01/flower.png" x="450" y="-400" width="1845" height="1779" />
         </mask>
       </defs>
-      <image id="lines" xlink:href="~@/assets/images/home/section-01/overlay.jpg" x="0" y="0" width="1600" height="900" />
-      <g id="maskReveal" mask="url(#theMask)" >
-        <image id="regular" xlink:href="~@/assets/images/home/section-01/main.jpg" x="0" y="0" width="1600" height="900" />
+      <image xlink:href="~@/assets/images/home/section-01/overlay.jpg" x="0" y="0" width="1920" height="1280"/>
+      <g mask="url(#theMask)" >
+        <image xlink:href="~@/assets/images/home/section-01/main.jpg" x="0" y="0" width="1920" height="1280" />
       </g>
-      <circle id="ring" r="20" fill="none" stroke="#dc143c" stroke-width="2" cx="800" cy="450" />
-      <circle id="dot" r="4" fill="#dc143c" cx="800" cy="450" />
     </svg>
 
     <div class="container">
@@ -32,7 +34,7 @@
 </template>
 
 <script>
-  import { TweenMax, Power2 } from 'gsap/all'
+  import { TimelineLite, Power2 } from 'gsap/all'
 
   export default {
     data () {
@@ -43,42 +45,17 @@
     mounted () {
       let self = this
 
-      console.clear();
-      var svg = document.querySelector("#demo");
-      var tl = new TimelineMax();
-      var pt = svg.createSVGPoint();
-      var ratio = 0.5625;
+      var tl = new TimelineLite()
 
-      tl.to("#masker", 2, {attr:{r:2400}, ease:Power2.easeIn});
+      tl.to(self.$refs.circle, 2, { attr: { r: 2400 }, ease: Power2.easeIn });
       tl.reversed(true);
 
-      function mouseHandler() {
-        tl.reversed(!tl.reversed());
-      }
-
-      function getPoint(evt){
-        pt.x = evt.clientX;
-        pt.y = evt.clientY;
-        return pt.matrixTransform(svg.getScreenCTM().inverse());
-      }
-
-      function newSize() {
-        var w = window.innerWidth ;
-        var h = window.innerHeight;
-        if (w > h * (16/9) ) {
-          TweenMax.set("#demo", { attr: { width: w, height: w * ratio } });
-        } else {
-          TweenMax.set("#demo", { attr: { width: h / ratio, height: h } });
-        }
-        var data = svg.getBoundingClientRect();
-        TweenMax.set("#demo", {x:w/2 - data.width/2});
-        TweenMax.set("#demo", {y:h/2 - data.height/2});
-      }
-
-      window.addEventListener("mousedown", mouseHandler)
-      window.addEventListener("mouseup", mouseHandler)
-
-      newSize()
+      self.$refs.section.addEventListener('mousedown', function () {
+        tl.reversed(false);
+      })
+      self.$refs.section.addEventListener('mouseup', function () {
+        tl.reversed(true);
+      })
 
       self.$refs.section.onEnter = function () { console.log('section-01 enter') }
       self.$refs.section.onLeave = function () { console.log('section-01 leave') }
@@ -88,19 +65,34 @@
 
 <style lang="scss" scoped>
   section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: #000000;
 
-    height: 100vh;
+    @media screen and (min-width: 1200px) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
 
-    #demo {
-      cursor: none;
+    .logo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+
+      img {
+        width: 14rem;
+        height: auto;
+      }
+    }
+
+    svg {
+      cursor: pointer;
       position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: auto;
     }
 
     .section-content {

@@ -23,6 +23,12 @@
 <style lang="scss" scoped>
   section {
     background-color: #c04c36;
-    height: 100vh;
+
+    @media screen and (min-width: 1200px) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
   }
 </style>
